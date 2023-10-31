@@ -1,4 +1,4 @@
-# Créer un environement CONDA et installer les requiremetns
+# Créer un environement CONDA et installer les requirements
 conda create --name $ENVIRONMENT_NAME python tensorflow  --file requirements.txt
 
 conda create --name cnn_raphael python=3.9  --file requirements.txt
