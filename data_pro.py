@@ -71,7 +71,7 @@ def affichage_image(train_data, class_names):
             plt.axis("off")
     plt.show()        
     return 
-def parameters_fit_tf(train_data,val_data):
+def build_model():
     num_classes = 2
     model = tf.keras.Sequential([
         layers.experimental.preprocessing.Rescaling(1./255),
@@ -87,13 +87,16 @@ def parameters_fit_tf(train_data,val_data):
         layers.Dense(64,activation='relu'),
         layers.Dense(num_classes, activation='softmax')
     ])
-
     model.compile(optimizer='adam',
               loss=tf.losses.SparseCategoricalCrossentropy(from_logits=True),
         metrics=['accuracy'],)
 
-    logdir="logs"
+    return model
+def parameters_fit_tf(train_data,val_data):
 
+    model=build_model()
+
+    logdir="logs"    
     tensorboard_callback = keras.callbacks.TensorBoard(log_dir=logdir,histogram_freq=1, write_images=logdir,
                                                    embeddings_data=train_data)
 
@@ -106,11 +109,11 @@ def parameters_fit_tf(train_data,val_data):
     return history,logdir,tensorboard_callback, model
 
 if __name__ == "__main__":
-    chemin='./data_/data'
+    chemin='./data_/data/'
   
     train_path="/Users/raphael/Documents/programming/programmation/CNN/data_/data/"
 
-    test_path="/Users/raphael/Documents/programming/programmation/CNN/data_/data/cloudy/"
+    test_path="/Users/raphael/Documents/programming/programmation/CNN/data_/data/pikachu/"
 
     data_dir=get_data(chemin)
     train_dataset,test_dataset=datagen_dataset(train_path,test_path)
@@ -120,5 +123,13 @@ if __name__ == "__main__":
     history,logdir,tensorboard_callback,model=parameters_fit_tf(train_data,val_data)
    # history.summary()
     model.save('./model_save/dessert.h5') 
+    model.save_weights('./model_save/weights.h5')
     print(history.history)
+    plt.plot(history.history["val_accuracy"],color="r",label="val_accuracy")
+    plt.title("Accuracy Graph")
+    plt.xlabel("number of epochs")
+    plt.ylabel("accuracy")
+    plt.legend()
+    plt.grid()
+    plt.show()
 

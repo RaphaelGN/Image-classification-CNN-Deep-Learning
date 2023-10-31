@@ -45,38 +45,60 @@ def display_filter(model, layer_name):
         except:
             ax.imshow(filter[:,:,:,i][0])
     plt.show()       
-
+from data_pro import build_model
 if __name__ == "__main__":
+    model=build_model()
     model = tf.keras.models.load_model('./model_save/dessert.h5') #  chemin de fichier 
-    photo_1 = cv2.imread("./data_/data/cloudy/train_12.jpg", cv2.IMREAD_COLOR)
-    photo_2 = cv2.imread("/Users/raphael/Documents/programming/programmation/CNN/data_/data/desert/desert(1).jpg", cv2.IMREAD_COLOR)
-   
-    num = 4 # number of layer
-    for name in ['photo_1','photo_2']:
-        if name == 'photo_1':
-            image = photo_1
-        elif name == 'photo_2':
-            image = photo_2
-        plt.axis('off')
-        plt.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
-        plt.show()
-        for i in range(1,num):
-            if num == 0 and i==0:
-                print('////////////////////////////////////////////////////////')
-                print(f'{i+1}st convolutionnal layer')
-                display_image_filtered(name,model,f'conv2d',image)
-                print('--------')
-                print(f'{i-1}nd Pooling')
-                display_image_filtered(name,model,f'max_pooling2d',image)
-                print('////////////////////////////////////////////////////////')
-            else:
-                print('#---------------------------------------------------#')
-                print(f'{i+1}st convolutionnal layer')
-                display_image_filtered(name,model,f'conv2d_{num-i}',image)
-                print('--------')
-                print(f'{i+1}nd Pooling')
-                display_image_filtered(name,model,f'max_pooling2d_{num-i}',image)
-                print('#---------------------------------------------------#')
+    model.load_weights('./model_save/weights.h5')
 
-                
-    display_filter(model,f'conv2d_{num-1}')
+    plt.plot(model.model.history["val_accuracy"],color="r",label="val_accuracy")
+    plt.title("Accuracy Graph")
+    plt.xlabel("number of epochs")
+    plt.ylabel("accuracy")
+    plt.legend()
+    plt.grid()
+    plt.show()
+
+#     photo_1 = cv2.imread("./data_/data/cloudy/train_12.jpg", cv2.IMREAD_COLOR)
+#     photo_2 = cv2.imread("/Users/raphael/Documents/programming/programmation/CNN/data_/data/desert/desert(1).jpg", cv2.IMREAD_COLOR)
+
+#     num = 4 # number of layer
+#     for name in ['photo_1','photo_2']:
+#         if name == 'photo_1':
+#             image = photo_1
+#         elif name == 'photo_2':
+#             image = photo_2
+#         plt.axis('off')
+#         plt.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
+#         plt.show()
+#         for i in range(1,num):
+#             if num == 0 and i==0:
+#                 print('////////////////////////////////////////////////////////')
+#                 print(f'{i+1}st convolutionnal layer')
+#                 display_image_filtered(name,model,f'conv2d',image)
+#                 print('--------')
+#                 print(f'{i-1}nd Pooling')
+#                 display_image_filtered(name,model,f'max_pooling2d',image)
+#                 print('////////////////////////////////////////////////////////')
+#             else:
+#                 print('#---------------------------------------------------#')
+#                 print(f'{i+1}st convolutionnal layer')
+#                 display_image_filtered(name,model,f'conv2d_{num-i}',image)
+#                 print('--------')
+#                 print(f'{i+1}nd Pooling')
+#                 display_image_filtered(name,model,f'max_pooling2d_{num-i}',image)
+#                 print('#---------------------------------------------------#')
+
+#     display_filter(model,f'conv2d_{num-1}')
+
+
+#     #history.history["val_acc"]
+# # print(history.params)
+#     #print(model.history.history)
+#     # plt.plot(history.history["val_accuracy"],color="r",label="val_accuracy")
+#     # plt.title("Accuracy Graph")
+#     # plt.xlabel("number of epochs")
+#     # plt.ylabel("accuracy")
+#     # plt.legend()
+#     # plt.grid()
+#     # plt.show()
