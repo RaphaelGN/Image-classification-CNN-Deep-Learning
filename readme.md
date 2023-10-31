@@ -1,4 +1,9 @@
 ![Demo](./show_photo/demo_image.png)
+## Why Learn CNNs?
+
+CNNs have become fundamental in computer vision and image analysis. They are behind cutting-edge technologies like image recognition, object detection, and more. Learning CNNs can open up exciting career opportunities and enable you to create innovative applications.
+
+
 # Créer un environement CONDA et installer les requirements
 conda create --name $ENVIRONMENT_NAME python tensorflow  --file requirements.txt
 
@@ -22,3 +27,5 @@ docker run cnn-docker
 
 %load_ext tensorboard
 %tensorboard --logdir logs
+
+Happy learning! 🚀
