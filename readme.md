@@ -1,3 +1,4 @@
+![Demo](./show_photo/demo_image.png)
 # Créer un environement CONDA et installer les requirements
 conda create --name $ENVIRONMENT_NAME python tensorflow  --file requirements.txt
 
